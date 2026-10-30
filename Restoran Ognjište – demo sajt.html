@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Restoran Ognjište – domaća kuhinja na žaru</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,800&family=Work+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#eef1ea;--surface:#ffffff;--text:#1d2a23;--muted:#58675e;--line:#cfd8cc;
+  --green:#1f3a2e;--accent:#b8741a;--on-green:#f3efe6;--hdr:#eef1ea;
+  --serif:'Fraunces',Georgia,'Times New Roman',serif;--sans:'Work Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--bg:#121a16;--surface:#1b2620;--text:#ece8de;--muted:#a3b0a8;--line:#2c3a32;--green:#0d1812;--accent:#e3a33b;--hdr:#121a16;color-scheme:dark}
+}
+:root[data-theme="dark"]{--bg:#121a16;--surface:#1b2620;--text:#ece8de;--muted:#a3b0a8;--line:#2c3a32;--green:#0d1812;--accent:#e3a33b;--hdr:#121a16;color-scheme:dark}
+html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.6;font-size:17px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--hdr);z-index:30}
+h1,h2,h3{font-family:var(--serif);line-height:1.1;margin:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--hdr);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;padding:12px 20px}
+.logo{font-family:var(--serif);font-weight:800;font-size:21px;text-decoration:none}
+nav{display:flex;gap:18px;font-size:15px;font-weight:500}
+nav a{text-decoration:none;color:var(--muted);transition:color .2s}
+nav a:hover{color:var(--accent)}
+@media(max-width:520px){nav a:nth-child(3){display:none}}
+
+.hero{background:radial-gradient(120% 80% at 80% 0%,#3d5a3c 0%,transparent 60%),radial-gradient(80% 60% at 10% 100%,#7a4a14 0%,transparent 70%),#14271e;color:#f3efe6;padding:72px 20px 80px;min-height:78vh;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+.hero .in{max-width:720px;margin:0 auto;width:100%}
+.hero h1{font-size:clamp(44px,12vw,92px);font-weight:800;letter-spacing:-.02em}
+.line{display:block;overflow:hidden}
+.line span{display:block;transform:translateY(105%);animation:up .9s cubic-bezier(.2,.8,.2,1) forwards}
+.line:nth-child(2) span{animation-delay:.15s}.line:nth-child(3) span{animation-delay:.3s}
+@keyframes up{to{transform:none}}
+.hero p{max-width:34ch;font-size:19px;margin:22px 0 30px;opacity:0;animation:fade .8s .8s forwards}
+.hero .btns{display:flex;gap:12px;flex-wrap:wrap;opacity:0;animation:fade .8s 1s forwards}
+@keyframes fade{to{opacity:1}}
+.ember{position:absolute;border-radius:50%;background:#e3a33b;opacity:.0;animation:rise linear infinite;filter:blur(1px)}
+@keyframes rise{0%{transform:translateY(0) scale(1);opacity:0}15%{opacity:.7}100%{transform:translateY(-70vh) scale(.2);opacity:0}}
+
+.btn{display:inline-block;padding:13px 24px;border-radius:999px;font-weight:600;text-decoration:none;border:2px solid #e3a33b;transition:transform .2s,background .2s,color .2s;cursor:pointer;font-family:var(--sans);font-size:16px}
+.btn.fill{background:#e3a33b;color:#1d1405}
+.btn.ghost{color:#f3efe6;background:transparent}
+.btn:hover{transform:translateY(-2px)}
+.btn.ghost:hover{background:#e3a33b;color:#1d1405}
+
+section{padding:64px 20px;max-width:760px;margin:0 auto}
+h2{font-size:clamp(32px,7vw,46px);font-weight:800;margin-bottom:18px}
+.lead{color:var(--muted);max-width:56ch}
+.rv{opacity:1;transform:none;transition:opacity .7s,transform .7s}
+.js .rv{opacity:0;transform:translateY(20px)}
+.js .rv.in{opacity:1;transform:none}
+
+.tabs{display:flex;gap:8px;margin:26px 0 8px;overflow-x:auto;padding-bottom:6px}
+.tab{background:transparent;color:var(--text);border:1.5px solid var(--line);border-radius:999px;padding:9px 18px;font:600 15px var(--sans);cursor:pointer;white-space:nowrap;transition:background .2s,color .2s,border-color .2s}
+.tab[aria-selected="true"]{background:var(--green);color:var(--on-green);border-color:var(--green)}
+.panel{animation:fade .45s both}
+.panel[hidden]{display:none}
+.item{display:grid;grid-template-columns:1fr auto;gap:2px 16px;padding:16px 0;border-bottom:1px dashed var(--line)}
+.item h3{font-size:21px;font-weight:500}
+.item .price{font-family:var(--serif);font-weight:800;color:var(--accent);font-size:20px}
+.item p{grid-column:1;margin:0;color:var(--muted);font-size:15px}
+
+.about{display:grid;gap:20px}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:10px}
+.fact{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px}
+.fact b{display:block;font-family:var(--serif);font-size:30px;color:var(--accent)}
+.fact span{font-size:14px;color:var(--muted)}
+
+.book{background:var(--green);color:var(--on-green);max-width:none}
+.book .wrap{max-width:720px;margin:0 auto}
+.book .lead{color:#c5cfc7}
+.fields{display:grid;gap:12px;margin:22px 0}
+.fields label{display:grid;gap:5px;font-size:14px;font-weight:500}
+.fields input,.fields select{padding:13px 14px;border-radius:10px;border:1.5px solid #3b5547;background:#162a20;color:#f3efe6;font:16px var(--sans)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+#msg{min-height:1.6em;color:#e3a33b;font-weight:500;margin-top:14px}
+.hours{display:grid;grid-template-columns:auto 1fr;gap:6px 24px;margin:18px 0 0}
+.hours dt{font-weight:600}.hours dd{margin:0;color:var(--muted)}
+footer{text-align:center;padding:30px 20px 40px;color:var(--muted);font-size:14px}
+
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.line span{transform:none}.hero p,.hero .btns{opacity:1}.ember{display:none}}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="#top">Ognjište</a>
+  <nav><a href="#jelovnik">Jelovnik</a><a href="#o-nama">O nama</a><a href="#rezervacija">Rezervacija</a></nav>
+</header>
+
+<div class="hero" id="top">
+  <div class="in">
+    <h1><span class="line"><span>Domaće.</span></span><span class="line"><span>Na žaru.</span></span><span class="line"><span>Za stolom.</span></span></h1>
+    <p>Roštilj, sač i hleb iz peći. Kuvamo onako kako se kuvalo kod bake, samo za vas.</p>
+    <div class="btns"><a class="btn fill" href="#rezervacija">Rezerviši sto</a><a class="btn ghost" href="#jelovnik">Pogledaj jelovnik</a></div>
+  </div>
+</div>
+
+<section id="jelovnik">
+  <h2 class="rv">Jelovnik</h2>
+  <p class="lead rv">Sve se sprema na dan, od namirnica iz našeg kraja.</p>
+  <div class="tabs rv" role="tablist" aria-label="Kategorije jelovnika">
+    <button class="tab" role="tab" aria-selected="true" data-t="p1">Predjela</button>
+    <button class="tab" role="tab" aria-selected="false" data-t="p2">Sa žara</button>
+    <button class="tab" role="tab" aria-selected="false" data-t="p3">Deserti</button>
+  </div>
+  <div class="panel" id="p1" role="tabpanel">
+    <div class="item"><h3>Pršuta i domaći sir</h3><span class="price">12 KM</span><p>Sušena pršuta, kajmak, kiseli paprike.</p></div>
+    <div class="item"><h3>Čorba od povrća</h3><span class="price">5 KM</span><p>Sezonsko povrće, domaća kuvana testenina.</p></div>
+    <div class="item"><h3>Proja sa kajmakom</h3><span class="price">6 KM</span><p>Topla, iz peći, uz domaći kajmak.</p></div>
+  </div>
+  <div class="panel" id="p2" role="tabpanel" hidden>
+    <div class="item"><h3>Ćevapi (10 komada)</h3><span class="price">11 KM</span><p>Somun, luk, kajmak.</p></div>
+    <div class="item"><h3>Teleći medaljoni</h3><span class="price">22 KM</span><p>Sa pečenim krompirom i sezonskom salatom.</p></div>
+    <div class="item"><h3>Miješano meso za dvoje</h3><span class="price">34 KM</span><p>Pileći file, ćevapi, vješalica, pomfrit, salata.</p></div>
+  </div>
+  <div class="panel" id="p3" role="tabpanel" hidden>
+    <div class="item"><h3>Palačinke sa orasima</h3><span class="price">6 KM</span><p>Domaći džem i med.</p></div>
+    <div class="item"><h3>Baklava</h3><span class="price">5 KM</span><p>Pravljena svako jutro.</p></div>
+    <div class="item"><h3>Tufahija</h3><span class="price">5 KM</span><p>Jabuka punjena orasima, šlag.</p></div>
+  </div>
+</section>
+
+<section id="o-nama" class="about">
+  <h2 class="rv">Naša priča</h2>
+  <p class="lead rv">Ognjište je porodični restoran. Vatru palimo svako jutro u šest, a prvi hleb izlazi iz peći pre nego što stignu prvi gosti.</p>
+  <div class="facts rv">
+    <div class="fact"><b data-n="18">0</b><span>godina rada</span></div>
+    <div class="fact"><b data-n="40">0</b><span>mesta u bašti</span></div>
+    <div class="fact"><b data-n="100">0</b><span>% domaće meso</span></div>
+  </div>
+</section>
+
+<section id="rezervacija" class="book">
+  <div class="wrap">
+    <h2 class="rv">Rezerviši sto</h2>
+    <p class="lead rv">Pošalji nam datum i broj osoba, a mi ti potvrdimo u roku od sat vremena.</p>
+    <div class="fields">
+      <label>Ime<input id="ime" autocomplete="name" placeholder="Tvoje ime"></label>
+      <div class="row2">
+        <label>Datum<input id="dat" type="date"></label>
+        <label>Broj osoba<select id="os"><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7+</option></select></label>
+      </div>
+      <button class="btn fill" id="send" type="button">Pošalji rezervaciju</button>
+      <div id="msg" aria-live="polite"></div>
+    </div>
+    <dl class="hours">
+      <dt>Pon–Čet</dt><dd>10:00–22:00</dd>
+      <dt>Pet–Sub</dt><dd>10:00–24:00</dd>
+      <dt>Nedjelja</dt><dd>11:00–20:00</dd>
+      <dt>Telefon</dt><dd><a href="tel:+38700000000">+387 00 000 000</a></dd>
+    </dl>
+  </div>
+</section>
+
+<footer>Restoran Ognjište · Demo sajt</footer>
+
+<script>
+document.documentElement.classList.add('js');
+// embers in hero
+(function(){var h=document.querySelector('.hero');for(var i=0;i<14;i++){var e=document.createElement('i');e.className='ember';var s=3+Math.random()*5;e.style.cssText='left:'+Math.random()*100+'%;bottom:-10px;width:'+s+'px;height:'+s+'px;animation-duration:'+(6+Math.random()*7)+'s;animation-delay:'+Math.random()*6+'s';h.appendChild(e)}})();
+// scroll reveal
+var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}})},{threshold:.15});
+document.querySelectorAll('.rv').forEach(function(el){io.observe(el)});
+// counters
+var co=new IntersectionObserver(function(es){es.forEach(function(x){if(!x.isIntersecting)return;var el=x.target,n=+el.dataset.n,t0=null;co.unobserve(el);
+function f(t){if(!t0)t0=t;var p=Math.min((t-t0)/1200,1);el.textContent=Math.round(n*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(f)}requestAnimationFrame(f)})},{threshold:.6});
+document.querySelectorAll('[data-n]').forEach(function(el){co.observe(el)});
+// menu tabs
+document.querySelectorAll('.tab').forEach(function(b){b.addEventListener('click',function(){
+document.querySelectorAll('.tab').forEach(function(x){x.setAttribute('aria-selected',x===b)});
+document.querySelectorAll('.panel').forEach(function(p){p.hidden=p.id!==b.dataset.t})})});
+// reservation (demo)
+document.getElementById('send').addEventListener('click',function(){
+var m=document.getElementById('msg'),n=document.getElementById('ime').value.trim(),d=document.getElementById('dat').value;
+m.textContent=(!n||!d)?'Upiši ime i datum da bismo mogli da rezervišemo sto.':'Hvala, '+n+'! Javljamo ti se uskoro radi potvrde.'});
+</script>
+</body>
+</html>
